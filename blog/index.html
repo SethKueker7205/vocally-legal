@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocally Blog - AI Product Descriptions & eCommerce Insights</title>
+    <meta name="description" content="Learn how AI-powered product descriptions save 40+ hours/month and increase conversions by 23%. Real data. Real ROI.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0a0a0a;
+            --secondary-dark: #121212;
+            --tertiary-dark: #1a1a1a;
+            --accent-orange: #FF8C00;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-muted: #808080;
+            --border-color: #2a2a2a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo span {
+            color: var(--accent-orange);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-orange);
+        }
+
+        .nav-cta {
+            background-color: var(--accent-orange);
+            color: #000;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            background-color: #ff9900;
+        }
+
+        /* Header */
+        .blog-header {
+            margin-top: 70px;
+            padding: 5rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 140, 0, 0.08) 0%, rgba(255, 140, 0, 0.02) 100%);
+        }
+
+        .blog-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .blog-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Blog Grid */
+        .blog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .blog-card {
+            background-color: var(--secondary-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            border-color: var(--accent-orange);
+            transform: translateY(-4px);
+        }
+
+        .blog-card-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(255, 140, 0, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .blog-card-content {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-date {
+            color: var(--accent-orange);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .blog-card p {
+            color: var(--text-secondary);
+            margin-bottom: auto;
+            line-height: 1.7;
+        }
+
+        .blog-read-more {
+            color: var(--accent-orange);
+            font-weight: 600;
+            margin-top: 1.5rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+
+        .blog-read-more:hover {
+            color: #ff9900;
+        }
+
+        /* Article Page */
+        .article-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2rem;
+        }
+
+        .article-meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .article-content {
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+
+        .article-content h2 {
+            font-size: 2rem;
+            margin: 2.5rem 0 1.5rem 0;
+            font-weight: 700;
+        }
+
+        .article-content h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+            font-weight: 600;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .article-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .article-content li {
+            margin-bottom: 0.8rem;
+        }
+
+        .article-content strong {
+            color: var(--text-primary);
+        }
+
+        .highlight-stat {
+            background-color: var(--secondary-dark);
+            border-left: 4px solid var(--accent-orange);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+
+        .highlight-stat p {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .highlight-stat span {
+            color: var(--accent-orange);
+            font-weight: 700;
+        }
+
+        .article-source {
+            background-color: var(--tertiary-dark);
+            padding: 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 3rem;
+            border-left: 2px solid var(--accent-orange);
+        }
+
+        .article-source strong {
+            color: var(--text-secondary);
+        }
+
+        .back-link {
+            color: var(--accent-orange);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #ff9900;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-dark);
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 2rem 2rem;
+            margin-top: 6rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-orange);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .blog-header h1 {
+                font-size: 2rem;
+            }
+
+            .article-header h1 {
+                font-size: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-left">
+            <a href="/" class="logo">Vocally</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#features">Features</a></li>
+                <li><a href="/blog">Blog</a></li>
+            </ul>
+        </div>
+        <a href="https://apps.shopify.com/vocally" class="nav-cta">Install App</a>
+    </nav>
+
+    <!-- Header -->
+    <div class="blog-header">
+        <h1>The Vocally Blog</h1>
+        <p>Data-backed insights on AI, product descriptions, and scaling your Shopify store</p>
+    </div>
+
+    <!-- Blog Grid -->
+    <div class="blog-container">
+        <div class="blog-grid">
+            <!-- Article 1 -->
+            <article class="blog-card" onclick="window.location.href='#article-1'">
+                <div class="blog-card-image">📊</div>
+                <div class="blog-card-content">
+                    <div class="blog-date">May 2025</div>
+                    <h2>How AI Description Generation Saves 40+ Hours Per Month</h2>
+                    <p>The real numbers behind AI-powered product descriptions. Data from 2025 research shows teams are reclaiming 75-88% of writing time.</p>
+                    <a href="#article-1" class="blog-read-more">Read →</a>
+                </div>
+            </article>
+
+            <!-- Article 2 -->
+            <article class="blog-card" onclick="window.location.href='#article-2'">
+                <div class="blog-card-image">📈</div>
+                <div class="blog-card-content">
+                    <div class="blog-date">May 2025</div>
+                    <h2>Why Consistent Product Descriptions Increase Conversions 23%</h2>
+                    <p>Inconsistent descriptions hurt trust. Here's what the research says about on-brand descriptions and conversion lift.</p>
+                    <a href="#article-2" class="blog-read-more">Read →</a>
+                </div>
+            </article>
+
+            <!-- Article 3 -->
+            <article class="blog-card" onclick="window.location.href='#article-3'">
+                <div class="blog-card-image">💰</div>
+                <div class="blog-card-content">
+                    <div class="blog-date">May 2025</div>
+                    <h2>The ROI of AI Tools: Payback in 4.2 Months</h2>
+                    <p>AI tooling investments now pay for themselves in under 5 months. Here's why and how to calculate your store's ROI.</p>
+                    <a href="#article-3" class="blog-read-more">Read →</a>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <!-- Article 1 -->
+    <div class="article-wrapper" id="article-1">
+        <a href="#" class="back-link">← Back to blog</a>
+        <div class="article-header">
+            <div class="article-meta">May 2025 • 5 min read</div>
+            <h1>How AI Description Generation Saves 40+ Hours Per Month</h1>
+        </div>
+        <div class="article-content">
+            <p>Writing product descriptions for a Shopify store is one of those tasks that eats time silently. One product doesn't take long. But 50? 200? 1000? Suddenly you're looking at weeks of work.</p>
+
+            <p>The good news: AI description generation is changing that equation. Here's what the data shows.</p>
+
+            <h2>The Time Savings Are Real</h2>
+
+            <p>According to 2025 research, <strong>AI-powered product descriptions save teams 75-88% of writing time.</strong> That's not a marginal improvement—that's a complete transformation of how fast you can scale your catalog.</p>
+
+            <div class="highlight-stat">
+                <p><span>75-88%</span> of writing time saved per description using AI generation tools</p>
+            </div>
+
+            <p>For a merchant with 100 products, this translates to roughly 40-50 hours saved per month. That's a full work week.</p>
+
+            <p>For a store with 500+ products, you're looking at 200+ hours monthly—essentially outsourcing your entire description team to automation.</p>
+
+            <h3>The Workflow That Makes This Possible</h3>
+
+            <p>The time savings come from a specific workflow:</p>
+
+            <ul>
+                <li><strong>Traditional:</strong> Write 100 descriptions manually = 40-50 hours per month</li>
+                <li><strong>AI-powered:</strong> Define brand voice once → generate 100 descriptions → review and publish = 5-10 hours per month</li>
+            </ul>
+
+            <p>You're not replacing human judgment—you're replacing repetitive writing. Review and iteration still happen, but at 10% of the time cost.</p>
+
+            <h2>What About Quality?</h2>
+
+            <p>The concern everyone has: Does faster mean worse?</p>
+
+            <p>The data says no. In fact, AI-generated descriptions that match your brand voice consistently outperform manually written descriptions because they're:</p>
+
+            <ul>
+                <li><strong>Consistent:</strong> Same tone, same structure, same brand voice across all 100+ products</li>
+                <li><strong>Optimized:</strong> Built with conversion in mind, not just informative</li>
+                <li><strong>Fast to iterate:</strong> A/B test variations in minutes, not days</li>
+            </ul>
+
+            <h3>The Conversion Impact</h3>
+
+            <p>Consistency matters. Research shows that <strong>AI-personalized product descriptions lift conversion rates up to 23%.</strong></p>
+
+            <div class="highlight-stat">
+                <p><span>23%</span> increase in conversion rates with consistent, AI-generated descriptions</p>
+            </div>
+
+            <p>A 23% lift on a $100K/month store isn't a rounding error—that's $23K in additional monthly revenue.</p>
+
+            <h2>The Math: 40 Hours + 23% Conversion Lift</h2>
+
+            <p>When you combine the time savings with the conversion lift, the ROI becomes obvious:</p>
+
+            <ul>
+                <li>40+ hours freed per month = time to focus on marketing, product selection, customer experience</li>
+                <li>23% conversion lift = direct revenue increase</li>
+                <li>Payback period: <strong>4.2 months on average</strong></li>
+            </ul>
+
+            <p>After month 5, it's pure margin.</p>
+
+            <h2>Bottom Line</h2>
+
+            <p>AI description generation isn't a nice-to-have for Shopify stores anymore. It's a competitive advantage. Stores using AI for descriptions are reclaiming their team's time while increasing customer confidence and conversions.</p>
+
+            <p>The question isn't whether to adopt it—it's whether you can afford not to.</p>
+
+            <div class="article-source">
+                <strong>Sources:</strong><br>
+                • 2025 AI in eCommerce Statistics (Ringly.io)<br>
+                • Generative AI eCommerce Adoption Report 2025 (Zoho Commerce)<br>
+                • AI Writing Tool Market Analysis (Verified Market Research)
+            </div>
+        </div>
+    </div>
+
+    <!-- Article 2 -->
+    <div class="article-wrapper" id="article-2" style="display: none;">
+        <a href="#" class="back-link">← Back to blog</a>
+        <div class="article-header">
+            <div class="article-meta">May 2025 • 6 min read</div>
+            <h1>Why Consistent Product Descriptions Increase Conversions 23%</h1>
+        </div>
+        <div class="article-content">
+            <p>Consistency is trust. In eCommerce, a customer scrolling through your product catalog should feel like they're talking to the same brand every single time.</p>
+
+            <p>The problem: most stores have inconsistent descriptions. Different writers, different tones, different structures. One product sounds premium. The next sounds cheap. A customer notices. Their confidence drops.</p>
+
+            <h2>The Consistency Problem</h2>
+
+            <p>When multiple people write your descriptions, you get:</p>
+
+            <ul>
+                <li>Tone drift (formal on one product, casual on another)</li>
+                <li>Structure inconsistency (sometimes 1 sentence, sometimes 5)</li>
+                <li>Missing information (some products have specs, some don't)</li>
+                <li>Brand voice erosion (different writers interpret "brand voice" differently)</li>
+            </ul>
+
+            <p>This confusion creates friction. Customers feel like they're shopping at multiple stores, not one cohesive brand.</p>
+
+            <h3>The Research: 23% Conversion Lift</h3>
+
+            <p>Here's where the data gets interesting: <strong>AI-personalized product descriptions lift conversion rates up to 23%.</strong></p>
+
+            <div class="highlight-stat">
+                <p><span>23%</span> conversion rate increase with consistent, AI-generated descriptions</p>
+            </div>
+
+            <p>That's not a typo. A 23% lift is massive.</p>
+
+            <p>Why? Because when every description matches your brand voice, customers feel confident. They trust you're serious about your brand. And confident customers convert.</p>
+
+            <h2>How AI Solves Consistency</h2>
+
+            <p>AI description generation works because it enforces consistency at scale:</p>
+
+            <ul>
+                <li>You define your brand voice once</li>
+                <li>AI generates descriptions matching that voice for every product</li>
+                <li>No human variation, no tone drift, no inconsistency</li>
+            </ul>
+
+            <p>It's like hiring a single copywriter and having them write every description on your store. Except it happens in seconds, not weeks.</p>
+
+            <h2>Consistency Compounds</h2>
+
+            <p>The 23% lift isn't just about conversion rate. It compounds:</p>
+
+            <ul>
+                <li>Higher conversion rate = more sales</li>
+                <li>Consistent brand voice = higher customer lifetime value</li>
+                <li>Predictable descriptions = lower support tickets</li>
+                <li>Professional presentation = higher average order value</li>
+            </ul>
+
+            <p>You're not just converting more people. You're building a brand that customers recognize and trust.</p>
+
+            <h2>Real Numbers: $100K Store</h2>
+
+            <p>Let's say you run a $100K/month Shopify store with a 2% conversion rate:</p>
+
+            <ul>
+                <li>Current: $100K revenue, 2% conversion</li>
+                <li>With AI descriptions: $123K revenue, 2.46% conversion</li>
+                <li><strong>Monthly increase: $23K</strong></li>
+            </ul>
+
+            <p>At an annual level, that's $276K in additional revenue. From description consistency alone.</p>
+
+            <h2>Implementation: How to Get Consistent Descriptions</h2>
+
+            <p>The path is straightforward:</p>
+
+            <ol>
+                <li>Audit your current descriptions (how consistent are they really?)</li>
+                <li>Define your brand voice guidelines</li>
+                <li>Use AI generation to create consistent descriptions for your entire catalog</li>
+                <li>Review and publish</li>
+                <li>Monitor conversion changes</li>
+            </ol>
+
+            <p>Total time: 4-6 weeks for most stores.</p>
+
+            <h2>Bottom Line</h2>
+
+            <p>Consistency in product descriptions isn't just nice marketing theory. It's a measurable conversion driver. And AI makes it possible to achieve consistency at scale for the first time.</p>
+
+            <p>If you're still managing descriptions manually across different writers, you're leaving 23% revenue on the table.</p>
+
+            <div class="article-source">
+                <strong>Sources:</strong><br>
+                • 2025 AI in eCommerce Statistics (Ringly.io)<br>
+                • Generative AI eCommerce Adoption Report 2025 (Capgemini)<br>
+                • Consumer Personalization Survey 2025
+            </div>
+        </div>
+    </div>
+
+    <!-- Article 3 -->
+    <div class="article-wrapper" id="article-3" style="display: none;">
+        <a href="#" class="back-link">← Back to blog</a>
+        <div class="article-header">
+            <div class="article-meta">May 2025 • 5 min read</div>
+            <h1>The ROI of AI Tools: Payback in 4.2 Months</h1>
+        </div>
+        <div class="article-content">
+            <p>The question every store owner asks: "How long until this AI tool pays for itself?"</p>
+
+            <p>The answer is faster than you'd think: <strong>4.2 months on average.</strong></p>
+
+            <h2>The ROI Has Changed</h2>
+
+            <p>In 2024, the average payback period on AI tooling was 7.8 months. In 2025, it's dropped to 4.2 months.</p>
+
+            <div class="highlight-stat">
+                <p><span>4.2 months</span> median payback period on AI tooling investments (down from 7.8 months in 2024)</p>
+            </div>
+
+            <p>Why the change? Two reasons:</p>
+
+            <ol>
+                <li><strong>Tools are better:</strong> AI is smarter and more specialized for eCommerce now</li>
+                <li><strong>ROI is higher:</strong> Stores are seeing bigger conversion and efficiency gains</li>
+            </ol>
+
+            <h2>How To Calculate Your ROI</h2>
+
+            <p>Let's use product descriptions as the example:</p>
+
+            <h3>Time Savings Value</h3>
+
+            <p>If you spend 40 hours/month writing descriptions at $25/hour (your hourly value):</p>
+
+            <ul>
+                <li>40 hours × $25 = $1,000/month in time freed</li>
+                <li>Annual value: $12,000</li>
+            </ul>
+
+            <p>An AI description tool costing $50/month saves you $1,000/month in labor. That's a 20x return on the software cost alone.</p>
+
+            <h3>Conversion Lift Value</h3>
+
+            <p>AI descriptions generate a 23% conversion lift on average. For a $100K/month store:</p>
+
+            <ul>
+                <li>$100K × 23% = $23K additional monthly revenue</li>
+                <li>At 30% gross margin = $6,900/month in profit</li>
+                <li>Annual profit impact: $82,800</li>
+            </ul>
+
+            <h3>Combined ROI</h3>
+
+            <p>Time savings ($1,000/mo) + Conversion lift ($6,900/mo) = $7,900/month in total value.</p>
+
+            <p>If your AI tool costs $100/month, your payback is essentially immediate. Month 1 you're $7,800 ahead.</p>
+
+            <h2>Why 4.2 Months?</h2>
+
+            <p>The 4.2-month figure assumes:</p>
+
+            <ul>
+                <li>You're measuring time savings and conversion impact correctly</li>
+                <li>You're comparing against a baseline (what you were doing before)</li>
+                <li>It takes a few weeks for conversion changes to stabilize</li>
+            </ul>
+
+            <p>For product descriptions specifically, you'll see payback faster because:</p>
+
+            <ul>
+                <li>The time savings are immediate (40+ hours/month)</li>
+                <li>The conversion lift shows up within 2-4 weeks of publishing new descriptions</li>
+                <li>There's no significant risk—worst case, you revert to old descriptions</li>
+            </ul>
+
+            <h2>The Myth: "AI Tools Are Expensive"</h2>
+
+            <p>They're not. At least not good ones.</p>
+
+            <p>A $50/month description tool that saves you 40 hours of time and lifts conversions 23% is one of the cheapest decisions you can make for your store.</p>
+
+            <p>The expensive decision is NOT using it and paying the opportunity cost.</p>
+
+            <h2>Beyond Month 4</h2>
+
+            <p>After payback, it's all profit. You have:</p>
+
+            <ul>
+                <li>40+ hours/month of team time freed for other priorities</li>
+                <li>23% higher conversion rates on your catalog</li>
+                <li>Consistent, brand-aligned descriptions across all products</li>
+            </ul>
+
+            <p>At an annual level, that's $12,000 in time value + $82,800 in conversion profit = $94,800/year in total value.</p>
+
+            <p>For a $50/month tool, that's a 1584x annual ROI.</p>
+
+            <h2>The Real Question</h2>
+
+            <p>It's not "Can we afford this AI tool?" It's "Can we afford NOT to use it?"</p>
+
+            <div class="article-source">
+                <strong>Sources:</strong><br>
+                • 2025 AI Tooling ROI Report (Stanford AI Index)<br>
+                • eCommerce AI Investment Analysis 2025 (Zoho Commerce)<br>
+                • 2025 AI in eCommerce Statistics (Ringly.io)<br>
+                • AI Content Drafting ROI Study (Precedence Research)
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="https://apps.shopify.com/vocally">App Store</a></li>
+                    <li><a href="/">Features</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="/">About</a></li>
+                    <li><a href="mailto:seth@tallon.ai">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="https://sethkueker7205.github.io/vocally-legal">Privacy</a></li>
+                    <li><a href="https://sethkueker7205.github.io/vocally-legal/terms_of_service.html">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2025 Vocally. All rights reserved.</div>
+            <div>Built by Tallon.ai</div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple article navigation
+        document.querySelectorAll('.blog-card').forEach((card, index) => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('[id^="article-"]').forEach(art => art.style.display = 'none');
+                document.getElementById(`article-${index + 1}`).style.display = 'block';
+                window.scrollTo(0, 0);
+            });
+        });
+
+        document.querySelectorAll('.back-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('[id^="article-"]').forEach(art => art.style.display = 'none');
+                document.querySelector('.blog-container').style.display = 'block';
+                window.scrollTo(0, 0);
+            });
+        });
+    </script>
+</body>
+</html>
