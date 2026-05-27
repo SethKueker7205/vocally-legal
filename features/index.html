@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocally Features - AI Product Description Generator for Shopify</title>
+    <meta name="description" content="Explore Vocally's powerful features for generating on-brand product descriptions at scale. Bulk generation, brand voice training, Shopify integration, and more.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-dark: #0a0a0a;
+            --secondary-dark: #121212;
+            --tertiary-dark: #1a1a1a;
+            --accent-orange: #FF8C00;
+            --accent-orange-hover: #ff9900;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-muted: #808080;
+            --border-color: #2a2a2a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo span {
+            color: var(--accent-orange);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-orange);
+        }
+
+        .nav-cta {
+            background-color: var(--accent-orange);
+            color: #000;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-cta:hover {
+            background-color: var(--accent-orange-hover);
+        }
+
+        /* Header */
+        .features-header {
+            margin-top: 70px;
+            padding: 5rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 140, 0, 0.08) 0%, rgba(255, 140, 0, 0.02) 100%);
+        }
+
+        .features-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .features-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Features Container */
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Feature Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background-color: var(--secondary-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent-orange);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Feature Details Section */
+        .feature-details {
+            background-color: var(--secondary-dark);
+            padding: 4rem 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-details h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            font-weight: 700;
+        }
+
+        .detail-item {
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            padding: 2rem;
+            background-color: var(--primary-dark);
+            border-left: 4px solid var(--accent-orange);
+            border-radius: 4px;
+        }
+
+        .detail-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .detail-item p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .detail-item ul {
+            margin-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .detail-item li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-orange);
+            color: #000;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-orange-hover);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-dark);
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-orange);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .features-header h1 {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-left">
+            <a href="../" class="logo">Vocally</a>
+            <ul class="nav-links">
+                <li><a href="../#how-it-works">How it works</a></li>
+                <li><a href="../features/">Features</a></li>
+                <li><a href="../blog/">Resources</a></li>
+            </ul>
+        </div>
+        <a href="https://apps.shopify.com/vocally" class="nav-cta">Install App</a>
+    </nav>
+
+    <!-- Header -->
+    <div class="features-header">
+        <h1>Powerful Features for Description Generation</h1>
+        <p>Everything you need to generate on-brand product descriptions at scale</p>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="features-container">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Instant Generation</h3>
+                <p>Generate descriptions for single products or your entire catalog in seconds. No waiting, no delays.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Brand Voice Training</h3>
+                <p>Define your brand's tone, style, and personality once. Every description matches perfectly.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📦</div>
+                <h3>Bulk Generation</h3>
+                <p>Generate 50, 500, or 1000+ descriptions in one batch. One-click bulk operations.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <h3>Shopify Native</h3>
+                <p>One-click install. Auto-syncs your catalog. Publish directly to Shopify without copy-paste.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>Unlimited Languages</h3>
+                <p>Generate descriptions in 80+ languages automatically. Global reach, one tool.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Real-time Analytics</h3>
+                <p>Track generation stats, performance, and usage in real time on your dashboard.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">✍️</div>
+                <h3>SEO Optimization</h3>
+                <p>Descriptions built with conversion and search in mind. Better rankings, better sales.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚙️</div>
+                <h3>Flexible Training</h3>
+                <p>Upload docs, add FAQs, provide guidelines. Train Vocally on exactly how you want descriptions.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>A/B Testing</h3>
+                <p>Generate multiple variations of descriptions. Test different tones and styles instantly.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Features -->
+    <div class="feature-details">
+        <h2>How Each Feature Works</h2>
+
+        <div class="detail-item">
+            <h3>⚡ Instant Generation</h3>
+            <p>Click a button. Watch descriptions appear in seconds.</p>
+            <p>No API keys. No complicated setup. Just select products and generate. Vocally does the heavy lifting while you focus on selling.</p>
+            <ul>
+                <li>Single product → instant description</li>
+                <li>Entire catalog → bulk batch processing</li>
+                <li>No per-description limits</li>
+            </ul>
+        </div>
+
+        <div class="detail-item">
+            <h3>🎯 Brand Voice Training</h3>
+            <p>Define your store's personality. Vocally remembers it forever.</p>
+            <p>Answer 5 simple questions about tone, audience, and style. Every generated description will sound like your brand—not generic AI.</p>
+            <ul>
+                <li>Tone (formal, casual, playful, luxury, etc.)</li>
+                <li>Target audience (who are your customers?)</li>
+                <li>Key brand values to emphasize</li>
+                <li>Style guidelines and examples</li>
+            </ul>
+        </div>
+
+        <div class="detail-item">
+            <h3>📦 Bulk Generation</h3>
+            <p>Scale from 10 products to 10,000 in one operation.</p>
+            <p>No per-product limits. No monthly quotas (on Pro plan). Generate your entire catalog, then publish with one click.</p>
+            <ul>
+                <li>Basic plan: 50 descriptions/month</li>
+                <li>Pro plan: Unlimited descriptions</li>
+                <li>Batch processing for large catalogs</li>
+                <li>Scheduling for future publication</li>
+            </ul>
+        </div>
+
+        <div class="detail-item">
+            <h3>🔗 Shopify Native Integration</h3>
+            <p>Built specifically for Shopify. No third-party tools needed.</p>
+            <p>Install from the App Store. Catalog syncs automatically. Publish directly to Shopify. No manual work, no copy-paste headaches.</p>
+            <ul>
+                <li>One-click Shopify App Store install</li>
+                <li>Auto-import products, collections, variants</li>
+                <li>Direct publish to product pages</li>
+                <li>Works with collections and all product types</li>
+            </ul>
+        </div>
+
+        <div class="detail-item">
+            <h3>🌍 Unlimited Languages</h3>
+            <p>Sell globally. Generate descriptions in any language instantly.</p>
+            <p>No extra cost. No language limits. Generate English, Spanish, French, Chinese, Japanese—80+ languages supported.</p>
+            <ul>
+                <li>80+ languages supported</li>
+                <li>Maintains brand voice across languages</li>
+                <li>No per-language fees</li>
+            </ul>
+        </div>
+
+        <div class="detail-item">
+            <h3>📊 Real-time Analytics</h3>
+            <p>See exactly how you're using Vocally.</p>
+            <p>Track descriptions generated, plan usage, storage, and more on your dashboard. Know your limits at a glance.</p>
+            <ul>
+                <li>Descriptions generated this month</li>
+                <li>Plan usage and remaining quota</li>
+                <li>Generation history and timestamps</li>
+            </ul>
+        </div>
+
+        <div class="detail-item">
+            <h3>✍️ SEO Optimization</h3>
+            <p>Descriptions built for search engines and customers.</p>
+            <p>Every description includes natural keyword placement, benefits-first messaging, and conversion-optimized language.</p>
+            <ul>
+                <li>Natural keyword integration</li>
+                <li>Mobile-optimized length</li>
+                <li>Conversion-focused messaging</li>
+                <li>Meta description generation</li>
+            </ul>
+        </div>
+
+        <div class="detail-item">
+            <h3>⚙️ Flexible Training</h3>
+            <p>Teach Vocally about your specific needs.</p>
+            <p>Upload brand guidelines, FAQs, or example descriptions. Vocally learns and applies your custom instructions.</p>
+            <ul>
+                <li>Upload brand guidelines (PDF, text)</li>
+                <li>Add specific phrases or terms to include</li>
+                <li>Provide example descriptions to mimic</li>
+                <li>Exclude certain phrases or topics</li>
+            </ul>
+        </div>
+
+        <div class="detail-item">
+            <h3>🔄 A/B Testing</h3>
+            <p>Test different description styles without writing them manually.</p>
+            <p>Generate 3-5 variations of each description. Test different tones, lengths, and angles. Pick the best performer.</p>
+            <ul>
+                <li>Generate multiple description variations</li>
+                <li>Test different tones and angles</li>
+                <li>Compare variants side-by-side</li>
+                <li>Publish the winner instantly</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-section">
+        <h2>Ready to see Vocally in action?</h2>
+        <p>7-day free trial. No credit card required.</p>
+        <a href="https://apps.shopify.com/vocally" class="btn-primary">Install from Shopify App Store</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="https://apps.shopify.com/vocally">App Store</a></li>
+                    <li><a href="../features/">Features</a></li>
+                    <li><a href="../blog/">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="../">About</a></li>
+                    <li><a href="mailto:seth@tallon.ai">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="https://sethkueker7205.github.io/vocally-legal">Privacy</a></li>
+                    <li><a href="https://sethkueker7205.github.io/vocally-legal/terms_of_service.html">Terms</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Docs</h3>
+                <ul>
+                    <li><a href="https://apps.shopify.com/vocally">Getting Started</a></li>
+                    <li><a href="mailto:seth@tallon.ai">Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2025 Vocally. All rights reserved.</div>
+            <div>Built by Tallon.ai</div>
+        </div>
+    </footer>
+</body>
+</html>
