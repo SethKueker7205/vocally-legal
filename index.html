@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocally - AI Product Descriptions for Shopify</title>
+    <meta name="description" content="Generate consistent, on-brand product descriptions at scale. Save 40+ hours/month and increase conversions by 23%.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-dark: #0a0a0a;
+            --secondary-dark: #121212;
+            --tertiary-dark: #1a1a1a;
+            --accent-orange: #FF8C00;
+            --accent-orange-hover: #ff9900;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-muted: #808080;
+            --border-color: #2a2a2a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--accent-orange);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-orange);
+        }
+
+        .nav-cta {
+            background-color: var(--accent-orange);
+            color: #000;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-cta:hover {
+            background-color: var(--accent-orange-hover);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 70px;
+            padding: 7rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 140, 0, 0.08) 0%, rgba(255, 140, 0, 0.02) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 140, 0, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 140, 0, 0.15);
+            border: 1px solid rgba(255, 140, 0, 0.3);
+            color: var(--accent-orange);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            color: var(--accent-orange);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-orange);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-orange-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent-orange);
+            border: 1px solid var(--accent-orange);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 140, 0, 0.1);
+        }
+
+        .hero-input {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero-input input {
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            background-color: var(--secondary-dark);
+            color: var(--text-primary);
+            border-radius: 6px;
+            width: 300px;
+            font-size: 0.95rem;
+        }
+
+        .hero-input input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .hero-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+
+        .hero-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .hero-links a:hover {
+            color: var(--accent-orange);
+        }
+
+        /* Highlights */
+        .highlights {
+            padding: 5rem 2rem;
+            background-color: var(--secondary-dark);
+        }
+
+        .highlights h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            font-weight: 700;
+        }
+
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .highlight-card {
+            background-color: var(--primary-dark);
+            padding: 2.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .highlight-card:hover {
+            border-color: var(--accent-orange);
+            transform: translateY(-4px);
+        }
+
+        .highlight-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 140, 0, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+
+        .highlight-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .highlight-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 6rem 2rem;
+        }
+
+        .benefits h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .benefits-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            font-size: 1.1rem;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .benefit-item {
+            text-align: center;
+        }
+
+        .benefit-number {
+            font-size: 3rem;
+            color: var(--accent-orange);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 6rem 2rem;
+            background-color: var(--secondary-dark);
+        }
+
+        .how-it-works h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            font-weight: 700;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .step {
+            background-color: var(--primary-dark);
+            padding: 2.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            position: relative;
+        }
+
+        .step::before {
+            content: attr(data-step);
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-orange);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .step h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .step p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Features */
+        .features {
+            padding: 6rem 2rem;
+        }
+
+        .features h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .features-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-check {
+            color: var(--accent-orange);
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text {
+            color: var(--text-secondary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 140, 0, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-dark);
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-orange);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-left {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .hero {
+                margin-top: 200px;
+                padding: 3rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-input {
+                flex-direction: column;
+            }
+
+            .hero-input input {
+                width: 100%;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .highlights h2 {
+                font-size: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <div class="logo">Vocally</div>
+            <ul class="nav-links">
+                <li><a href="#how-it-works">How it works</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="blog/">Resources</a></li>
+            </ul>
+        </div>
+        <a href="https://apps.shopify.com/vocally" class="nav-cta">Install App</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">✓ Now on Shopify App Store</div>
+            <h1>Stop writing product <span>descriptions.</span><br>Start generating them.</h1>
+            <p class="hero-subtitle">
+                Vocally uses AI to create consistent, on-brand product descriptions for your entire catalog in minutes, not days.
+            </p>
+            <div class="hero-buttons">
+                <a href="https://apps.shopify.com/vocally" class="btn btn-primary">Install from App Store</a>
+                <button class="btn btn-secondary" onclick="document.getElementById('demo-input').focus()">See demo</button>
+            </div>
+            <div class="hero-input">
+                <input type="text" id="demo-input" placeholder="Enter your website URL">
+                <button class="btn btn-primary" style="margin: 0;">Create demo</button>
+            </div>
+            <div class="hero-links">
+                <a href="https://apps.shopify.com/vocally">Store examples →</a>
+                <a href="blog/">Our story →</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="highlights">
+        <h2>The AI description engine built for Shopify stores</h2>
+        <div class="highlights-grid">
+            <div class="highlight-card">
+                <div class="highlight-icon">⚡</div>
+                <h3>Generates descriptions instantly</h3>
+                <p>Define your brand voice once. Generate on-brand descriptions for single products or your entire catalog in seconds.</p>
+            </div>
+            <div class="highlight-card">
+                <div class="highlight-icon">🎯</div>
+                <h3>Maintains your brand voice</h3>
+                <p>Every description matches your store's tone and style. Consistent messaging across all 100+ products or 1000+.</p>
+            </div>
+            <div class="highlight-card">
+                <div class="highlight-icon">📈</div>
+                <h3>Increases conversions</h3>
+                <p>Better descriptions mean confident customers. Studies show AI-personalized descriptions lift conversion rates up to 23%.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits">
+        <h2>The real impact</h2>
+        <p class="benefits-subtitle">What merchants see when they switch to AI descriptions</p>
+        <div class="benefits-grid">
+            <div class="benefit-item">
+                <div class="benefit-number">40+</div>
+                <div class="benefit-label">Hours saved per month</div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-number">23%</div>
+                <div class="benefit-label">Conversion rate lift</div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-number">88%</div>
+                <div class="benefit-label">Less writing time</div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-number">4.2mo</div>
+                <div class="benefit-label">Average payback period</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works" id="how-it-works">
+        <h2>From setup to selling in minutes</h2>
+        <div class="steps-grid">
+            <div class="step" data-step="1">
+                <h3>Install</h3>
+                <p>One-click install from the Shopify App Store. Your catalog syncs automatically.</p>
+            </div>
+            <div class="step" data-step="2">
+                <h3>Set your voice</h3>
+                <p>Tell Vocally how your store talks. Tone, style, any brand guidelines you want included.</p>
+            </div>
+            <div class="step" data-step="3">
+                <h3>Generate</h3>
+                <p>Pick products (or your whole catalog) and generate. Watch descriptions appear in seconds.</p>
+            </div>
+            <div class="step" data-step="4">
+                <h3>Publish</h3>
+                <p>Review and publish directly to Shopify. No copy-paste. No manual work.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2>Everything you need</h2>
+        <p class="features-subtitle">Built specifically for Shopify stores</p>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-check">✓</div>
+                <div class="feature-text">Bulk generation for entire catalogs</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-check">✓</div>
+                <div class="feature-text">Single product or full store</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-check">✓</div>
+                <div class="feature-text">Brand voice training</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-check">✓</div>
+                <div class="feature-text">Direct Shopify integration</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-check">✓</div>
+                <div class="feature-text">Unlimited languages</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-check">✓</div>
+                <div class="feature-text">7-day free trial</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-check">✓</div>
+                <div class="feature-text">No credit card required</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-check">✓</div>
+                <div class="feature-text">Real-time generation stats</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-check">✓</div>
+                <div class="feature-text">Email support included</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Ready to generate your best descriptions?</h2>
+        <p>7-day free trial. No credit card required. Install in 30 seconds.</p>
+        <a href="https://apps.shopify.com/vocally" class="btn btn-primary" style="font-size: 1.1rem; padding: 1.2rem 2.5rem;">Install Vocally Now</a>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="https://apps.shopify.com/vocally">App Store</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="blog/">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="mailto:seth@tallon.ai">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="https://sethkueker7205.github.io/vocally-legal">Privacy</a></li>
+                    <li><a href="https://sethkueker7205.github.io/vocally-legal/terms_of_service.html">Terms</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Docs</h3>
+                <ul>
+                    <li><a href="https://apps.shopify.com/vocally">Getting Started</a></li>
+                    <li><a href="mailto:seth@tallon.ai">Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2025 Vocally. All rights reserved.</div>
+            <div>Built by Tallon.ai</div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelector('.hero-input button').addEventListener('click', function() {
+            const url = document.getElementById('demo-input').value;
+            if (url) {
+                alert('Demo feature coming soon. For now, install the app: https://apps.shopify.com/vocally');
+            }
+        });
+    </script>
+</body>
+</html>
